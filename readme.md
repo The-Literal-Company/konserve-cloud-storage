@@ -3,7 +3,7 @@
 ```clojure
  com.literalco/konserve-cloud-storage
  {:git/url "https://github.com/The-Literal-Company/konserve-cloud-storage.git"
-  :git/sha "570f8f18044ec54ed94c47020c069cebebbaf1f2"}
+  :git/sha "5e9eff995130563d9a58b7fbc3374c9d3a33ed1a"}
 ```
 
 <hr>
