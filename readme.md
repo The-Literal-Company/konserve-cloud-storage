@@ -1,4 +1,4 @@
-##`konserve-cloud-storage`
+## `konserve-cloud-storage`
 
 ```clojure
  com.literalco/konserve-cloud-storage
