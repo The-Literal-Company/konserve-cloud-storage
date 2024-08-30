@@ -22,7 +22,7 @@
 (def spec
   {:bucket   "my-unique-bucket"
    :store-id "becomes-bucket-folder"
-   :client   <provide-ypur-own-storage-instance>})
+   :client   <provide-your-own-storage-instance>})
    
 (def bucket-store (kcs/connect-bucket-store spec :opts {:sync? true}))
 ```
