@@ -30,4 +30,5 @@
 ### links
 + [konserve](https://github.com/replikativ/konserve)
 + [konserve-s3](https://github.com/replikativ/konserve-s3)
++ [konserve api walkthrough](https://github.com/replikativ/konserve/blob/main/doc/api-walkthrough.md)
 + [cloud.google.com/java/docs/reference/google-cloud-storage/latest](https://cloud.google.com/java/docs/reference/google-cloud-storage/latest/com.google.cloud.storage.Storage)
