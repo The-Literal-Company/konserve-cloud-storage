@@ -21,8 +21,8 @@
 
 (def spec
   {:bucket   "my-unique-bucket"
-   :store-id "konserve-store-id"
-   :location "US-EAST1"})
+   :store-id "becomes-bucket-folder"
+   :client   <provide-ypur-own-storage-instance>})
    
 (def bucket-store (kcs/connect-bucket-store spec :opts {:sync? true}))
 ```
@@ -32,3 +32,4 @@
 + [konserve-s3](https://github.com/replikativ/konserve-s3)
 + [konserve api walkthrough](https://github.com/replikativ/konserve/blob/main/doc/api-walkthrough.md)
 + [cloud.google.com/java/docs/reference/google-cloud-storage/latest](https://cloud.google.com/java/docs/reference/google-cloud-storage/latest/com.google.cloud.storage.Storage)
++ [cloud.google.com/java/docs/reference/google-cloud-storage/latest/com.google.cloud.storage.Bucket.Builder](https://cloud.google.com/java/docs/reference/google-cloud-storage/latest/com.google.cloud.storage.Bucket.Builder)

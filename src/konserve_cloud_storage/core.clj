@@ -218,13 +218,11 @@
    :location "US-EAST1"})
 
 (defn cloud-storage-client
-  [{:keys [client location project-id]}]
+  [{:keys [client project-id]}]
   (or client
       (let [builder (StorageOptions/newBuilder)]
         (when project-id
           (.setProjectId builder project-id))
-        (when location
-          (.setLocation location))
         (.getService (.build builder)))))
 
 (defn spec->store-path
