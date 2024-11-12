@@ -131,8 +131,10 @@
   (let [opts (into-array Storage$BucketGetOption [])]
     (.get client bucket-name opts)))
 
-(defn ^Bucket create-bucket [client bucket]
-  (let [bucket-info (BucketInfo/of bucket)
+(defn ^Bucket create-bucket [client location bucket]
+  (let [bucket-info (-> (BucketInfo/newBuilder bucket)
+                        (.setLocation location)
+                        (.build))
         opts (into-array Storage$BucketTargetOption [])]
     (.create client bucket-info opts)))
 
@@ -151,7 +153,7 @@
   (-release [_ env]
     (if (:sync? env) nil (go-try- nil))))
 
-(defrecord CloudStorageBucket [client bucket store-path]
+(defrecord CloudStorageBucket [client location bucket store-path]
   impl/PBackingStore
   (-create-blob [this blob-key env]
     (async+sync (:sync? env) *default-sync-translation*
@@ -179,7 +181,7 @@
       (go-try-
         (when-not (get-bucket client bucket)
           (log/info (str "creating bucket " bucket))
-          (create-bucket client bucket)))))
+          (create-bucket client location bucket)))))
   (-sync-store [_ env]
     (if (:sync? env) nil (go-try- nil)))
   (-delete-store [_ env]
@@ -232,9 +234,10 @@
 
 (defn connect-bucket-store [spec & {:keys [opts] :as params}]
   (assert (string? (:bucket spec)))
+  (assert (string? (:location spec)))
   (let [client (cloud-storage-client spec)
         store-path (spec->store-path spec)
-        backing (CloudStorageBucket. client (:bucket spec) store-path)
+        backing (CloudStorageBucket. client (:location spec) (:bucket spec) store-path)
         config (merge {:opts               opts
                        :config             {:sync-blob? true
                                             :in-place? false
@@ -250,8 +253,9 @@
 
 (defn delete-store [spec & {:keys [opts]}]
   (assert (string? (:bucket spec)))
+  (assert (string? (:location spec)))
   (assert (string? (or (:store-path spec) (:store-id spec))))
   (let [complete-opts (merge {:sync? true} opts)
         store-path (spec->store-path spec)
-        backing (CloudStorageBucket. (cloud-storage-client spec) (:bucket spec) store-path)]
+        backing (CloudStorageBucket. (cloud-storage-client spec) (:location spec) (:bucket spec) store-path)]
     (impl/-delete-store backing complete-opts)))
